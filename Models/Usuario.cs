@@ -8,7 +8,7 @@ namespace AppRpgEtec.Models
 {
     public class Usuario
     {
-        public int Id { get; set; }
+        public  int Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public string PasswordString { get; set; } = string.Empty;
         public string Perfil { get; set; } = string.Empty;

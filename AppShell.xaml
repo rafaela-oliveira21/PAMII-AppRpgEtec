@@ -4,12 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AppRpgEtec"
-    Shell.FlyoutBehavior="Flyout"
+    xmlns:viewPersonagens="clr-namespace:AppRpgEtec.Viewa.Personagens"
     Title="AppRpgEtec">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate viewPersonagens:ListagemView}"
         Route="MainPage" />
 
 </Shell>

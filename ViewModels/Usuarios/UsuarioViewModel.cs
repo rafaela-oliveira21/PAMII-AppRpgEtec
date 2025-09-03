@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AppRpgEtec.Models;
 using AppRpgEtec.Services.Usuarios;
+using AppRpgEtec.Views.Personagens;
+using AppRpgEtec.Views.Usuarios;
 
 namespace AppRpgEtec.ViewModels.Usuarios
 {
@@ -13,46 +15,47 @@ namespace AppRpgEtec.ViewModels.Usuarios
     {
         public UsuarioViewModel()
         {
-            uService = new UsuarioService();
+            uServices = new UsuarioService();
+            //chama os metodo de baxo(Horganização).
             InicializarCommands();
         }
-
         public void InicializarCommands()
         {
             AutenticarCommand = new Command(async () => await AutenticarUsuario());
-            RegistrarCommand = new Command(async () => await AutenticarUsuario());
-            DirecionarCadastroCommand = new Command(async () => await AutenticarUsuario());
+            RegistrarCommand = new Command(async () => await RegistrarUsuario());
+            DirecionarCadastroCommand = new Command(async () => await DirecionarParaCadastro());
         }
-
-        private UsuarioService uService;
+        private UsuarioService uServices;
         public ICommand AutenticarCommand { get; set; }
         public ICommand RegistrarCommand { get; set; }
         public ICommand DirecionarCadastroCommand { get; set; }
+       
 
-
-        //Meu IP inletex 192.168.2.167
+        //region compacta o codigo visualmente.
         #region AtributosPropriedades
         private string login = string.Empty;
         private string senha = string.Empty;
 
-        public string Login
+        //gerar GET/SET Ctrl + r + e
+        public string Login 
         {
-            get => login;
-            set
-            {
+            get {return  login; }
+            set 
+            { 
                 login = value;
                 OnPropertyChanged();
             }
         }
-        public string Senha
+        public string Senha 
         {
-            get => senha;
+            get { return senha; }
             set
-            {
-                senha = value;
+            { 
+                senha = value; 
                 OnPropertyChanged();
             }
         }
+
 
         #endregion
 
@@ -61,58 +64,59 @@ namespace AppRpgEtec.ViewModels.Usuarios
         {
             try
             {
+                // metodo de chamada para API
                 Usuario u = new Usuario();
                 u.Username = login;
                 u.PasswordString = senha;
 
-                Usuario uAutenticado = await uService.PostAutenticarUsuarioAsync(u);
+                //Chamada a API
+                Usuario uAutenticado = await uServices.PostAutenticarUsuarioAsync(u);
 
+                //Se for diferente de vazio, Se não...
                 if (!string.IsNullOrEmpty(uAutenticado.Token))
                 {
                     string mensagem = $"Bem-vindo(a) {uAutenticado.Username}";
 
-                    //Guardando dados para uso futuro
+                    //Guarda dados para uso futuro
                     Preferences.Set("UsuarioId", uAutenticado.Id);
                     Preferences.Set("UsuarioUsername", uAutenticado.Username);
                     Preferences.Set("UsuarioPerfil", uAutenticado.Perfil);
                     Preferences.Set("UsuarioToken", uAutenticado.Token);
 
-                    await Application.Current.MainPage
-                        .DisplayAlert("Informação", mensagem, "Ok");
-
-                    Application.Current.MainPage = new MainPage();
+                    await Application.Current.MainPage.DisplayAlert("Informação", mensagem, "Ok");
+                    Application.Current.MainPage = new AppShell();
+                    // Alteração para que view inicial possa ser a de listagem.
                 }
                 else
                 {
                     await Application.Current.MainPage
-                        .DisplayAlert("Informação", "Dados incorretos 😑 ", "Ok");
+                        .DisplayAlert("Informação", "Dados incorretos! 🤨 ", "Ok");
                 }
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage
-                    .DisplayAlert("Informação", ex.Message + ex.InnerException, "Ok");
+                    .DisplayAlert("Informações", ex.Message + ex.InnerException, "Ok");
             }
         }
-        #endregion
 
-        #region Metodos
-        public async Task RegistrarUsuario()
+        public async Task RegistrarUsuario() //Metodo para registrar um usuario
         {
             try
             {
+                //Proxima codificacao
                 Usuario u = new Usuario();
-                u.Username = login;
+                u.Username = Login;
                 u.PasswordString = senha;
 
-                Usuario uRegistrado = await uService.PostAutenticarUsuarioAsync(u);
+                Usuario uRegistrado = await uServices.PostRegistrarUsuarioAsync(u);
 
                 if (uRegistrado.Id != 0)
                 {
-                    string mensagem = $"Usuario Id {uRegistrado.Id} registrado com sucesso.";
+                    string mensagem = $"Usuário Id {uRegistrado.Id} registrado com sucesso.";
                     await Application.Current.MainPage.DisplayAlert("Informação", mensagem, "Ok");
 
-                    await Application.Current.MainPage.Navigation.PopAsync();
+                    await Application.Current.MainPage.Navigation.PopAsync(); // Remove  a pagina da pilha de visualização.
                 }
             }
             catch (Exception ex)
@@ -121,21 +125,21 @@ namespace AppRpgEtec.ViewModels.Usuarios
                     .DisplayAlert("Informação", ex.Message + "Detalhes:" + ex.InnerException, "Ok");
             }
         }
-        #endregion
 
-        #region Metodos
-        public async Task DirecionarParaCadastro()
+        public async Task DirecionarParaCadastro() //Método para exibição da view de Cadastro
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PushAsync(new CadastroView());
+                await Application.Current.MainPage
+                    .Navigation.PushAsync(new CadastroView());
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage
-                    .DisplayAlert("Informação", ex.Message + "Detalhes:" + ex.InnerException, "Ok");
+                    .DisplayAlert("Informação", ex.Message, "Detalhes" + ex.InnerException, "Ok");
             }
         }
+
         #endregion
     }
 }
