@@ -4,13 +4,13 @@
              x:Class="AppRpgEtec.Views.Personagens.CadastroPersonagemView"
              Shell.PresentationMode="Animated"
              Title="CadastroPersonagemView">
-    <<ScrollView>
+
+    <ScrollView>
         <VerticalStackLayout Spacing="3" Padding="15">
             <Label Text="Nome" FontSize="Medium" />
             <Entry Text="{Binding Nome}" FontSize="Medium" />
             <Label Text="Classe" FontSize="Medium" />
-            <Picker Title="---Selecione---" ItemsSource="{Binding ListaTiposClasse}"
-                    ItemDisplayBinding="{Binding Descricao}" SelectedItem="{Binding TipoClasseSelecionado}" />
+            <Picker Title="---Selecione---" ItemsSource="{Binding ListaTiposClasse}" ItemDisplayBinding="{Binding Descricao}" SelectedItem="{Binding TipoClasseSelecionado}" />
             <Label Text="Pontos de Vida" FontSize="Medium" />
             <Entry Text="{Binding PontosVida}" FontSize="Medium" Keyboard="Numeric" />
             <Label Text="Força" FontSize="Medium" />
@@ -30,5 +30,5 @@
                 <Button Text="Cancel" Command="{Binding CancelarCommand}"></Button>
             </HorizontalStackLayout>
         </VerticalStackLayout>
-        </ScrollView>
+    </ScrollView>
 </ContentPage>

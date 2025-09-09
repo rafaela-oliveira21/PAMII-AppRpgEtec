@@ -3,27 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppRpgEtec.Views.Personagens.ListagemView"
              Title="ListagemView">
-    <VerticalStackLayout>
-        <ScrollView>
-            <VerticalStackLayout Padding="10, 0, 0, 0" VerticalOptions="FillAndExpand">
-                <ListView x:Name="listView" HasUnevenRows="True" ItemsSource="{Binding Personagens}" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Padding="10">
-                                    <Label Text="{Binding Nome}" FontSize="18" FontAttributes="Bold"/>
-                                    <Label Text="{Binding PontosVida}" FontSize="14"/>
-                                </StackLayout>
+    <Shell.TitleView>
+        <Button Command="{Binding NovoPersonagemCommand}" Text="Novo" HorizontalOptions="End"></Button>
+    </Shell.TitleView>
 
-                                <Shell.TitleView>
-                                    <Button Command="{Binding NovoPersonagemCommand}" Text="Novo" HorizontalOptions="End"></Button>
-                                </Shell.TitleView>
-                                
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </VerticalStackLayout>
-        </ScrollView>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="10, 0, 0, 0" VerticalOptions="FillAndExpand">
+            <ListView x:Name="listView" HasUnevenRows="True" ItemsSource="{Binding Personagens}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Nome}" FontSize="18" FontAttributes="Bold"/>
+                                <Label Text="{Binding PontosVida}" FontSize="14"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

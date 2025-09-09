@@ -14,8 +14,6 @@ namespace AppRpgEtec.ViewModels.Personagens
     {
         private PersonagemService pService;
         public ObservableCollection<Personagem> Personagens { get; set; }
-       
-        // construtor 
         public ListagemPersonagemViewModel()
         {
             string token = Preferences.Get("UsuarioToken", string.Empty);
@@ -24,24 +22,21 @@ namespace AppRpgEtec.ViewModels.Personagens
 
             _ = ObterPersonagens();
 
-            NovoPersonagem = new Command(async () => { await ExibirCadastroPersonagem(); });
+            NovoPersonagemCommand = new Command(async () => { await ExibirCadastroPersonagem(); });
         }
-
-        public ICommand NovoPersonagemCommand { get;}
-        //public Command NovoPersonagem { get; }
+        public ICommand NovoPersonagemCommand { get; }
 
         public async Task ObterPersonagens()
         {
-            try // Junto com o Cacth evitará que erros fechem o aplicativo
+            try
             {
                 Personagens = await pService.GetPersonagensAsync();
-                OnPropertyChanged(nameof(Personagens));  // Informara a view que houve carregamento
+                OnPropertyChanged(nameof(Personagens));
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                // Captara o erro para exibir em tela 
                 await Application.Current.MainPage
-                    .DisplayAlert("Ops", ex.Message, "Detalhes" + ex.InnerException, "Ok");
+                    .DisplayAlert("Ops", ex.Message + " Detalhes " + ex.InnerException, "Ok");
             }
         }
 
@@ -54,10 +49,9 @@ namespace AppRpgEtec.ViewModels.Personagens
             catch (Exception ex)
             {
                 await Application.Current.MainPage
-                    .DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
+                    .DisplayAlert("ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
             }
         }
-
 
     }
 }

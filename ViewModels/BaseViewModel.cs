@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace AppRpgEtec.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged // Lampada "implement Interface"
+    public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string name = "")
+        public void OnPropertyChanged([CallerMemberName]string name="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-            // mudanças de propriedades daVM para o FrontEnd. - feita uma vz
-
         }
     }
 }

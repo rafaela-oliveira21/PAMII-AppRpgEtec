@@ -9,15 +9,8 @@ public partial class CadastroPersonagemView : ContentPage
 	{
 		InitializeComponent();
 
-        cadViewModel = new CadastroPersonagemViewModel();
+		cadViewModel = new CadastroPersonagemViewModel();
 		BindingContext = cadViewModel;
-		Title = "Novo Prsonagem";
-
-
-    }
-
-    private void InitializeComponent()
-    {
-        throw new NotImplementedException();
-    }
+		Title = "Novo Personagem";
+	}
 }

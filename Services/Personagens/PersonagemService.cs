@@ -14,49 +14,37 @@ namespace AppRpgEtec.Services.Personagens
         private const string apiUrlBase = "https://rpgluiz2025-2.azurewebsites.net/Personagens";
 
         private string _token;
-
         public PersonagemService(string token)
         {
             _request = new Request();
             _token = token;
         }
 
-        // Proximos metodos aqui
         public async Task<int> PostPersonagemAsync(Personagem p)
         {
             return await _request.PostReturnIntAsync(apiUrlBase, p, _token);
         }
-
         public async Task<ObservableCollection<Personagem>> GetPersonagensAsync()
         {
-            string urlComplementar = string.Format("{0}", "/GetAll");
-            ObservableCollection<Models.Personagem> listaPersonagens = await
-            _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar,
-            _token);
+            string urlComplementar = string.Format("{0}", "/GetAll"); 
+            ObservableCollection<Models.Personagem> listaPersonagens = 
+                await _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar, _token);
             return listaPersonagens;
         }
 
         public async Task<Personagem> GetPersonagemAsync(int personagemId)
         {
-            string urlComplementar = string.Format("/{0}", personagemId);
-            var personagem = await _request.GetAsync<Models.Personagem>(apiUrlBase +
-            urlComplementar, _token);
+            string urlComplementar = string.Format("/{0}", personagemId); var personagem = await _request.GetAsync<Models.Personagem>(apiUrlBase + urlComplementar, _token);
             return personagem;
         }
 
         public async Task<int> PutPersonagemAsync(Personagem p)
         {
-            var result = await _request.PutAsync(apiUrlBase, p, _token);
-            return result;
+            var result = await _request.PutAsync(apiUrlBase, p, _token); return result;
         }
-
         public async Task<int> DeletePersonagemAsync(int personagemId)
         {
-            string urlComplementar = string.Format("/{0}", personagemId);
-            var result = await _request.DeleteAsync(apiUrlBase + urlComplementar, _token);
-            return result;
+            string urlComplementar = string.Format("/{0}", personagemId); var result = await _request.DeleteAsync(apiUrlBase + urlComplementar, _token); return result;
         }
-
-
     }
 }
