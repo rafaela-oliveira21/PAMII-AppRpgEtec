@@ -5,12 +5,66 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AppRpgEtec"
     xmlns:viewsPersonagens="clr-namespace:AppRpgEtec.Views.Personagens"
-    Shell.FlyoutBehavior="Flyout"
+    xmlns:viewsArmas ="clr-namespace:AppRpgEtec.Views.Armas"
+    xmlns:viewsDisputas="clr-namespace:AppRpgEtec.Views.Disputas"
+    xmlns:viewsUsuarios="clr-namespace:AppRpgEtec.Views.Usuarios"
     Title="AppRpgEtec">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate viewsPersonagens:ListagemView}"
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{OnPlatform Android=130, iOS=200}"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <FlexLayout Grid.Row="0" Direction="Row" AlignItems="Center" >
+                    <Frame Padding="0" CornerRadius="40"
+                            HeightRequest="80" WidthRequest="80" >
+                        <Image/>
+                    </Frame>
+                    <VerticalStackLayout Padding="10,0,0,0" Spacing="0">
+                        <Label Text="App RPG Etec" FontAttributes="Bold" FontSize="Medium" />
+                        <Label Text="Disciplina PAM-II"/>
+                    </VerticalStackLayout>
+                </FlexLayout>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
+        <ShellContent Title="Usuários" Icon="menuusuarios.svg"
+                  ContentTemplate="{DataTemplate viewsUsuarios:LocalizacaoView}"/> 
+
+        <ShellContent
+        Title="Home" Icon="home.svg"
+        ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <ShellContent Title="Personagens" Icon="menupersonagens.svg"
+                  ContentTemplate="{ DataTemplate viewsPersonagens:ListagemView}"/>
+
+    <ShellContent Title="Disputas" Icon="menudisputas.svg"
+                  ContentTemplate="{DataTemplate viewsDisputas:ListagemView}"/>
+
+    <ShellContent
+        Title="Armas"
+        ContentTemplate="{DataTemplate viewsArmas:ListagemView}"
+        Route="listagemArmas"/>
+
+        <Tab Title="Info" Route="Info" Icon="info.svg">
+            <ShellContent Title="Sobre" Route="Sobre" ContentTemplate="{DataTemplate local:AboutView}"/>
+
+            <ShellContent Title="Descrição" Route="desc" ContentTemplate="{DataTemplate local:DescriptionView}"/>
+        </Tab>
+    </FlyoutItem>
+
+        <ShellContent Title="Sair" Icon="exit.svg" ContentTemplate="{DataTemplate viewsUsuarios:LoginView}"
+                      Shell.FlyoutBehavior="Disabled"/>
+
+        <Shell.FlyoutFooter>
+            <Label x:Name="lblLogin" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+        </Shell.FlyoutFooter>
 
 </Shell>

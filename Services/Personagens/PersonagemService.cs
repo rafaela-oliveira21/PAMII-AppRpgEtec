@@ -14,9 +14,10 @@ namespace AppRpgEtec.Services.Personagens
         private const string apiUrlBase = "https://rpgluiz2025-2.azurewebsites.net/Personagens";
 
         private string _token;
-        public PersonagemService(string token)
+
+        public PersonagemService (string token)
         {
-            _request = new Request();
+            _request = new Request ();
             _token = token;
         }
 
@@ -26,25 +27,65 @@ namespace AppRpgEtec.Services.Personagens
         }
         public async Task<ObservableCollection<Personagem>> GetPersonagensAsync()
         {
-            string urlComplementar = string.Format("{0}", "/GetAll"); 
-            ObservableCollection<Models.Personagem> listaPersonagens = 
-                await _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar, _token);
+            string urlComplementar = string.Format("{0}", "/GetAll");
+            ObservableCollection<Models.Personagem> listaPersonagens = await
+            _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar,
+            _token);
             return listaPersonagens;
         }
-
         public async Task<Personagem> GetPersonagemAsync(int personagemId)
         {
-            string urlComplementar = string.Format("/{0}", personagemId); var personagem = await _request.GetAsync<Models.Personagem>(apiUrlBase + urlComplementar, _token);
+            string urlComplementar = string.Format("/{0}", personagemId);
+            var personagem = await _request.GetAsync<Models.Personagem>(apiUrlBase +
+            urlComplementar, _token);
             return personagem;
         }
 
         public async Task<int> PutPersonagemAsync(Personagem p)
         {
-            var result = await _request.PutAsync(apiUrlBase, p, _token); return result;
+            var result = await _request.PutAsync(apiUrlBase, p, _token);
+            return result;
         }
         public async Task<int> DeletePersonagemAsync(int personagemId)
         {
-            string urlComplementar = string.Format("/{0}", personagemId); var result = await _request.DeleteAsync(apiUrlBase + urlComplementar, _token); return result;
+            string urlComplementar = string.Format("/{0}", personagemId);
+            var result = await _request.DeleteAsync(apiUrlBase + urlComplementar, _token);
+            return result;
         }
+
+        public async Task<ObservableCollection<Personagem>>GetByNomeAproximadoAsync(string busca)
+        {
+            string urlComplementar = $"/GetByNomeAproximado/{busca}";
+
+            ObservableCollection<Models.Personagem> listaPersonagens = await 
+            _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar, _token);
+
+            return listaPersonagens;
+        }
+
+        public async Task<int> PutRestaurarPontosAsync(Personagem p)
+        {
+            string urlComplementar = "/RestaurarPontosVida";
+            var result = await _request.PutAsync(apiUrlBase + urlComplementar, p, _token);
+            return result;
+        }
+
+        public async Task<int> PutZerarRankingAsync(Personagem p)
+        {
+            string urlComplementar = "/ZerarRanking";
+            var result = await _request.PutAsync(apiUrlBase + urlComplementar, p, _token);
+            return result;
+        }
+
+        public async Task<int> PutZerarRankingRestaurarVidasGeralAsync()
+        {
+            string urlComplementar = "/ZerarRankingRestaurarVidas";
+            var result = await _request.PutAsync(apiUrlBase + urlComplementar, new Personagem(), _token);
+            return result;
+        }
+
+
     }
+
+
 }

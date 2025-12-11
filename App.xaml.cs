@@ -1,6 +1,4 @@
-﻿using AppRpgEtec.Views.Personagens;
-
-namespace AppRpgEtec
+﻿namespace AppRpgEtec
 {
     public partial class App : Application
     {
@@ -8,8 +6,6 @@ namespace AppRpgEtec
         {
             InitializeComponent();
             MainPage = new NavigationPage(new Views.Usuarios.LoginView());
-
-            Routing.RegisterRoute("cadPersonagemView", typeof(CadastroPersonagemView));
         }
 
         //protected override Window CreateWindow(IActivationState? activationState)

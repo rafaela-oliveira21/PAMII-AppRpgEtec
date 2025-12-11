@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +20,6 @@ namespace AppRpgEtec.Models
         public int Vitorias { get; set; }
         public int Derrotas { get; set; }
         public ClasseEnum Classe { get; set; }
+
     }
 }

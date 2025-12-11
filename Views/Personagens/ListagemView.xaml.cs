@@ -4,13 +4,21 @@ namespace AppRpgEtec.Views.Personagens;
 
 public partial class ListagemView : ContentPage
 {
-	ListagemPersonagemViewModel viewModel;
-
+	private readonly ListagemPersonagemViewModel viewModel;
 	public ListagemView()
 	{
 		InitializeComponent();
+
 		viewModel = new ListagemPersonagemViewModel();
 		BindingContext = viewModel;
-		Title = "Personagens - App Rpg Etec";
+		Title = "Personagens - APP RPG ETEC";
 	}
+
+
+
+        protected override void OnAppearing()
+    {
+        base.OnAppearing();
+		_ = viewModel.ObterPersonagens();
+    }
 }
